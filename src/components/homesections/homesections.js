@@ -39,7 +39,7 @@ define(['connectionManager', 'cardBuilder', 'appSettings', 'dom', 'apphost', 'la
     function loadSections(elem, apiClient, user, userSettings) {
         return getUserViews(apiClient, user.Id).then(function (userViews) {
             var html = '';
-
+            html += '<img src="assets/img/carousel/img1.png" width="100%"/>';
             if (userViews.length) {
                 var sectionCount = 7;
                 for (var i = 0; i < sectionCount; i++) {
