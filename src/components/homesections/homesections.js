@@ -1,4 +1,4 @@
-define(['connectionManager', 'cardBuilder', 'appSettings', 'dom', 'apphost', 'layoutManager', 'imageLoader', 'globalize', 'itemShortcuts', 'itemHelper', 'appRouter', 'scripts/imagehelper', 'paper-icon-button-light', 'emby-itemscontainer', 'emby-scroller', 'emby-button', 'css!./homesections'], function (connectionManager, cardBuilder, appSettings, dom, appHost, layoutManager, imageLoader, globalize, itemShortcuts, itemHelper, appRouter, imageHelper) {
+define(['connectionManager', 'cardBuilder', 'appSettings', 'dom', 'apphost', 'layoutManager', 'imageLoader', 'globalize', 'itemShortcuts', 'itemHelper', 'appRouter', 'scripts/imagehelper', 'glide', 'flickity', 'paper-icon-button-light', 'emby-itemscontainer', 'emby-scroller', 'emby-button', 'css!./homesections'], function (connectionManager, cardBuilder, appSettings, dom, appHost, layoutManager, imageLoader, globalize, itemShortcuts, itemHelper, appRouter, imageHelper, glide, flickity) {
     'use strict';
 
     function getDefaultSection(index) {
@@ -32,14 +32,27 @@ define(['connectionManager', 'cardBuilder', 'appSettings', 'dom', 'apphost', 'la
 
             sections.push(section);
         }
-
+        
         return sections;
     }
 
     function loadSections(elem, apiClient, user, userSettings) {
         return getUserViews(apiClient, user.Id).then(function (userViews) {
             var html = '';
-            html += '<img src="assets/img/carousel/img1.png" width="100%"/>';
+            const carousel = `
+            <div class="main-carousel">
+                <div class="carousel-cell">
+                    <img class='carousel-image' src="assets/img/carousel/img1.png" />
+                </div>
+                <div class="carousel-cell">
+                    <img class='carousel-image' src="assets/img/carousel/img2.png" />
+                </div>
+                <div class="carousel-cell">
+                    <img class='carousel-image' src="assets/img/carousel/img3.png" />
+                </div>      
+            </div>
+            `;
+            html += carousel;
             if (userViews.length) {
                 var sectionCount = 7;
                 for (var i = 0; i < sectionCount; i++) {
@@ -54,8 +67,12 @@ define(['connectionManager', 'cardBuilder', 'appSettings', 'dom', 'apphost', 'la
                 for (var i = 0; i < sections.length; i++) {
                     promises.push(loadSection(elem, apiClient, user, userSettings, userViews, sections, i));
                 }
-
                 return Promise.all(promises).then(function () {
+                    const glide = document.querySelector('.main-carousel');
+                    var flkty = new flickity( glide, {
+                        cellAlign: 'left',
+                        contain: true,
+                    });
                     return resume(elem, {
                         refresh: true,
                         returnPromise: false
@@ -82,6 +99,14 @@ define(['connectionManager', 'cardBuilder', 'appSettings', 'dom', 'apphost', 'la
                     });
                 }
             }
+            const glide = document.querySelector('.main-carousel');
+            console.log(glide);
+            var flkty = new flickity( glide, {
+                // options
+                cellAlign: 'left',
+                contain: true,
+            });
+            return null;
         });
     }
 

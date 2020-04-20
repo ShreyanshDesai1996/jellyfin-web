@@ -41,6 +41,18 @@ _define("jQuery", function() {
     return jquery;
 });
 
+var glide = require("glide");
+//require("glide/src/assets/sass/glide.core");
+_define("glide", function() {
+    return glide;
+});
+
+var flickity = require("flickity");
+require("flickity/css/flickity.css");
+_define("flickity", function() {
+    return flickity;
+});
+
 // hlsjs
 var hlsjs = require("hls.js");
 _define("hlsjs", function() {
