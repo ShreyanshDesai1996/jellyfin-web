@@ -39,3 +39,9 @@
     height: 100%;
     object-fit: cover;
 }
+
+@media (max-width: 600px) {
+    .main-carousel{
+        height: 200px;
+    }
+}
